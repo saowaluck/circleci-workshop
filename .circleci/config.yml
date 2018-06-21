@@ -3,7 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.1
-    working_directory: ~/repo
+    working_directory: ~/circleci-workshop
 
     steps:
       - checkout
@@ -25,7 +25,13 @@ jobs:
           key: v1-dependencies-{{ checksum "requirements.txt" }}
 
       - run:
+          name: run static analysis
+          command: |
+            . venv/bin/activate
+            python fizzbuzz.py
+          
+      - run:
           name: run tests
           command: |
             . venv/bin/activate
-            python manage.py test
+            python fizzbuzz.py
